@@ -8,12 +8,14 @@ class HamlRule
   const ROOT = 'root';
   const COMMENT = 'comment';
   const DOCTYPE = 'doctype';
+  const SELFCLOSE = 'selfclose';
   
   public $indent;
   public $tag;
   public $attr;
   public $action;
   public $content;
+  public $selfclose;
   
   public $index;
   public $parent;
@@ -117,6 +119,7 @@ class HamlRule
         }
       }
       
+      if($this->selfclose) $rendered .= " /";
       $rendered .= ">\n";
     }
     
@@ -197,7 +200,7 @@ class HamlRule
       }
     }
     
-    if($this->tag)
+    if($this->tag && !$this->selfclose)
     {
       $rendered .= "$indent</$this->tag>\n";
     }
@@ -270,7 +273,7 @@ class HamlParser extends lime_parser
     $this->_cur_attr = $this->_last_parent = array();
     $this->_cur_tag = '';
     
-    $this->_ast[0] = $this->_last_rule = new HamlRule(0, '', array(), HamlRule::ROOT, '');
+    $this->_ast[0] = $this->_last_rule = new HamlRule(0, '', false, array(), HamlRule::ROOT, '');
     array_unshift($this->_last_parent, $this->_last_rule);
     
     $this->_expect = new Expectations();
@@ -278,13 +281,18 @@ class HamlParser extends lime_parser
 
   function add_rule($indent, $tag, $attr, $action, $content)
   {
-    if($action != HamlRule::COMMENT && $action != HamlRule::DOCTYPE && $tag == '' && $content == '')
+    if($action != HamlRule::COMMENT && $action != HamlRule::DOCTYPE && $tag == '' && ($content == '' || $action != HamlRule::SELFCLOSE))
     { 
    //   return;
     }
     
     $new_rule = new HamlRule($indent, $tag, $attr, $action, $content);
     $new_rule->index = count($this->_ast);
+    
+    if($action == HamlRule::SELFCLOSE) 
+    {
+	$new_rule->selfclose = true;
+    }
    
     $this->_expect->check($new_rule);
     
@@ -343,6 +351,11 @@ class HamlParser extends lime_parser
     $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::CONTENT, $content);
   }
   
+  function process_selfclosing_rule($indent)
+  {
+    $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::SELFCLOSE, "");
+  }
+  
   function process_comment_rule($indent, $content)
   {
     $this->add_rule($indent, '', array(), HamlRule::COMMENT, $content);
@@ -368,7 +381,7 @@ class HamlParser extends lime_parser
   
   function process_doctype($doctype)
   {
-    $this->add_rule(0, '', array(), HamlRule::DOCTYPE, $doctype);
+    $this->add_rule(0, '', true, array(), HamlRule::DOCTYPE, $doctype);
   }
   
   function process_class($class)

@@ -51,6 +51,8 @@ class Tokeniser
   
   protected $_just_escaped;
   
+  protected $_tag;
+  
   public function __construct($input)
   {
     $this->_input = rtrim($input) . "\n";
@@ -58,6 +60,7 @@ class Tokeniser
     $this->_pos = 0;
     $this->_column = 0;
     $this->_just_escaped = false;
+    $this->_tag = false;
   }
   
   public function input()
@@ -110,7 +113,7 @@ class Tokeniser
     switch($c)
     {
       case "": $token = new Token('EOF'); break;
-      case "\n": $token = new Token('INDENT', $this->get_indent()); break;
+      case "\n": $token = new Token('INDENT', $this->get_indent());  $this->_tag = false; break;
         
       case '\\':
          $token = new Token('ESCAPE');
@@ -120,9 +123,9 @@ class Tokeniser
         
       case ' ': $token = $this->get_token(); break;
       
-      case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); break;
-      case '#': $token = new Token('ID', $this->get_name()); $this->skip_whitespace(); break;
-      case '.': $token = new Token('CLASS', $this->get_name()); $this->skip_whitespace(); break;
+      case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); $this->_tag = true; break;
+      case '#': $token = new Token('ID', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
+      case '.': $token = new Token('CLASS', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
       
       case '-':
         $c = $this->get_char();
@@ -138,10 +141,18 @@ class Tokeniser
         }
         
       case '/':
-        $token = new Token('COMMENT');
+      {
+        if($this->_tag == true)
+	{
+	  $token = new Token('TAG_CLOSE');
+	}
+	else
+	{
+	  $token = new Token('COMMENT');
+	}
         $this->skip_whitespace();
         break;
-      
+      }
       case '&':
       {
         $c = $this->get_char();
@@ -220,8 +231,8 @@ class Tokeniser
         
       case '{': $token = new Token('ATTR_START'); $this->skip_whitespace(); break;
       case ',': $token = new Token('ATTR_SEP'); $this->skip_whitespace(); break;
-      case '}': $token = new Token('ATTR_END'); $this->skip_whitespace(); break;
-      
+      case '}': $token = new Token('ATTR_END'); break;
+
       default: $token = new Token('LINE_CONTENT', $this->get_line($c)); break;
     }
     

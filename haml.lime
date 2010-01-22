@@ -45,12 +45,13 @@ echo = ESCAPED_ECHO/e {global $escaping; $escaping = 'ESCAPED_ECHO';}
 .
 
 rule = INDENT/i tag content/c  { /* echo "INDENT/i tag content/c ($i, $c)\n";      */  $this->process_content_rule($i, $c); }
+| INDENT/i tag TAG_CLOSE       { /* echo "INDENT/i tag TAG_CLOSE ($i)\n";      */  $this->process_selfclosing_rule($i); }
 | INDENT/i tag echo content/c  { /* echo "INDENT/i tag echo content/c  ($i, $c) $escaping\n"; */  global $escaping; $this->process_echo_rule($i, $c, $escaping); }
 | INDENT/i echo content/c      { /* echo "INDENT/i echo content/c ($i, $c) $escaping\n"; */      global $escaping; $this->process_echo_rule($i, $c, $escaping); }
 | INDENT/i EXEC content/c      { /* echo "INDENT/i EXEC content/c ($i, $c)\n";     */  $this->process_exec_rule($i, $c); }
 | INDENT/i HAML_COMMENT content{ /* echo "INDENT/i EXEC content/c ($i, $c)\n";     */  }
 | INDENT/i COMMENT content/c   { /* echo "INDENT/i COMMENT content/c ($i, $c)\n";  */  $this->process_comment_rule($i, $c); }
-| INDENT DOCTYPE content/c           { /* DOCTYPE content/c ($c)\n";                      */  $this->process_doctype($c); }
+| INDENT DOCTYPE content/c     { /* "INDENT DOCTYPE content/c ($c)\n";             */  $this->process_doctype($c); }
 | INDENT/i content/c           { /* echo "INDENT/i content/c ($i, $c)\n";          */  $this->process_content_rule($i, $c); }
 | INDENT/i ESCAPE content/c    {$this->process_content_rule($i, $c); }
 .
