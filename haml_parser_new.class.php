@@ -374,7 +374,6 @@ class HamlParser extends lime_parser
   
   function process_inline($value)
   {
-    var_dump($value);
     $this->_content[] = array(HamlRule::INLINE, $value);
   }
     

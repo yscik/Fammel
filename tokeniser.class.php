@@ -8,10 +8,12 @@ class Token
   protected $_line;
   protected $_column;
   
-  function __construct($type, $value = '')
+  function __construct($type, $value = '', $trim = true)
   {
     $this->_type = $type;
-    $this->_value = trim($value);
+
+    $this->_value = $trim ? trim($value) : $value;
+    
   }
   
   public function set_position($line, $column)
@@ -115,8 +117,7 @@ class Tokeniser
     if($this->_inline == 2)
     {
       $this->_inline = 0;
-      //return new Token('LINE_CONTENT', $this->get_line(''));  
-      
+      return new Token('LINE_CONTENT', $this->get_line(''), false);
     }
     
     switch($c)
@@ -135,33 +136,9 @@ class Tokeniser
       case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); $this->_tag = true; break;
       case '#': 
       {
-        if($this->_inline == 1)
-	{
-	  $c = $this->get_char();
-	  if($c == '{')
-	  {
-	    $token = new Token('INLINE_CODE', $this->get_inline_code(''));
-	    
-	    $this->_inline = 2;
-	    break;
-	  }
-	  else
-	  {
-	    die("error!");
-	    
-	    $this->rewind();
-	    
-	    $token = new Token('LINE_CONTENT', $this->get_line($c));
-	    break;
-	  }
-	}
-	else
-	{
-	  
-	  $token = new Token('ID', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
-	}
+	  $token = new Token('ID', $this->get_name()); $this->_tag = true; break;
       }
-      case '.': $token = new Token('CLASS', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
+      case '.': $token = new Token('CLASS', $this->get_name()); $this->_tag = true; break;
       
       case '-':
         $c = $this->get_char();
@@ -265,11 +242,23 @@ class Tokeniser
         
         break;
         
-      case '{': $token = new Token('ATTR_START'); $this->skip_whitespace(); break;
+      case '{': 
+      {
+	if($this->_inline == 1)
+	{
+	  $token = new Token('INLINE_CODE', $this->get_inline_code(''));
+	  $this->_inline = 2;
+	}
+        else
+	{
+	  $token = new Token('ATTR_START'); $this->skip_whitespace(); 
+	}
+	break;
+      }
       case ',': $token = new Token('ATTR_SEP'); $this->skip_whitespace(); break;
       case '}': $token = new Token('ATTR_END'); $this->skip_whitespace(); break;
 
-      default: $token = new Token('LINE_CONTENT', $this->get_line($c)); break;
+      default: $token = new Token('LINE_CONTENT', $this->get_line($c), false); break;
     }
     
     if($token)
@@ -371,12 +360,8 @@ class Tokeniser
     
     do
     {
-      if($c == "#")
-      {
-        $cn = $this->get_char();
-	$this->rewind(); 
-	if($cn == "{") { $this->rewind(); $this->_inline = 1; break; }
-      }
+      if($c == "#" && $this->get_char() == "{") { $this->_inline = 1; break; }
+      
       $token = "$token$c";
     }
     while(strlen($c = $this->get_char()) && $c != "\n");
@@ -461,8 +446,7 @@ class Tokeniser
     }
     while(strlen($c = $this->get_char()));
     
-    var_dump($token);
-    // No rewind -- we don't want the closing quote.
+    $this->rewind();
     return $token;
     
   }  
