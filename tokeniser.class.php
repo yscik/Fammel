@@ -53,6 +53,8 @@ class Tokeniser
   
   protected $_tag;
   
+  protected $_inline;
+  
   public function __construct($input)
   {
     $this->_input = rtrim($input) . "\n";
@@ -110,6 +112,13 @@ class Tokeniser
       return new Token('LINE_CONTENT', $this->get_line($c));
     }
     
+    if($this->_inline == 2)
+    {
+      $this->_inline = 0;
+      //return new Token('LINE_CONTENT', $this->get_line(''));  
+      
+    }
+    
     switch($c)
     {
       case "": $token = new Token('EOF'); break;
@@ -124,7 +133,34 @@ class Tokeniser
       case ' ': $token = $this->get_token(); break;
       
       case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); $this->_tag = true; break;
-      case '#': $token = new Token('ID', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
+      case '#': 
+      {
+        if($this->_inline == 1)
+	{
+	  $c = $this->get_char();
+	  if($c == '{')
+	  {
+	    $token = new Token('INLINE_CODE', $this->get_inline_code(''));
+	    
+	    $this->_inline = 2;
+	    break;
+	  }
+	  else
+	  {
+	    die("error!");
+	    
+	    $this->rewind();
+	    
+	    $token = new Token('LINE_CONTENT', $this->get_line($c));
+	    break;
+	  }
+	}
+	else
+	{
+	  
+	  $token = new Token('ID', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
+	}
+      }
       case '.': $token = new Token('CLASS', $this->get_name()); $this->skip_whitespace(); $this->_tag = true; break;
       
       case '-':
@@ -142,7 +178,7 @@ class Tokeniser
         
       case '/':
       {
-        if($this->_tag == true)
+        if($this->_tag)
 	{
 	  $token = new Token('TAG_CLOSE');
 	}
@@ -262,28 +298,31 @@ class Tokeniser
     return $c;
   }
   
-  public function rewind()
+  public function rewind($chars = 1)
   {
-    if(!$this->_pos)
+    while($chars--)
     {
-      return;
-    }
-    
-    $this->_pos--;
-    
-    if($this->_input[$this->_pos] == "\n")
-    {
-      $this->_line--;
-      $this->_column = 1;
-      
-      for($pos = $this->_pos-1; $pos--; $this->_input[$pos] != "\n" && $pos >= 0)
+      if(!$this->_pos)
       {
-        $this->_column++;
+	return;
       }
-    }
-    else
-    {
-      $this->_column--;
+    
+      $this->_pos--;
+    
+      if($this->_input[$this->_pos] == "\n")
+      {
+	$this->_line--;
+	$this->_column = 1;
+      
+	for($pos = $this->_pos-1; $pos--; $this->_input[$pos] != "\n" && $pos >= 0)
+	{
+	  $this->_column++;
+	}
+      }
+      else
+      {
+	$this->_column--;
+      }
     }
   }
   
@@ -332,6 +371,12 @@ class Tokeniser
     
     do
     {
+      if($c == "#")
+      {
+        $cn = $this->get_char();
+	$this->rewind(); 
+	if($cn == "{") { $this->rewind(); $this->_inline = 1; break; }
+      }
       $token = "$token$c";
     }
     while(strlen($c = $this->get_char()) && $c != "\n");
@@ -401,6 +446,26 @@ class Tokeniser
     $this->rewind();
     return $token;
   }
+  
+  public function get_inline_code($c)
+  {
+    $token = '';
+    
+    $braces = 1;
+    do
+    {
+      if($c == "{") $braces++;
+      if($c == "}" && --$braces == 0) break; 
+      
+      $token = "$token$c";
+    }
+    while(strlen($c = $this->get_char()));
+    
+    var_dump($token);
+    // No rewind -- we don't want the closing quote.
+    return $token;
+    
+  }  
 }
 
 /*
