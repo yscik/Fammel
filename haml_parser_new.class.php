@@ -294,7 +294,7 @@ class HamlParser extends lime_parser
     $this->_cur_tag = '';
     $this->_content = array();
     
-    $this->_ast[0] = $this->_last_rule = new HamlRule(0, '', false, array(), HamlRule::ROOT, '');
+    $this->_ast[0] = $this->_last_rule = new HamlRule(0, '', array(), HamlRule::ROOT, '');
     array_unshift($this->_last_parent, $this->_last_rule);
     
     $this->_expect = new Expectations();
@@ -419,7 +419,7 @@ class HamlParser extends lime_parser
   
   function process_doctype($doctype)
   {
-    $this->add_rule(0, '', true, array(), HamlRule::DOCTYPE, $doctype);
+    $this->add_rule(0, '', array(), HamlRule::DOCTYPE, $doctype);
   }
   
   function process_class($class)

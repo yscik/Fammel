@@ -267,7 +267,7 @@ class Tokeniser
         
       case '{': $token = new Token('ATTR_START'); $this->skip_whitespace(); break;
       case ',': $token = new Token('ATTR_SEP'); $this->skip_whitespace(); break;
-      case '}': $token = new Token('ATTR_END'); break;
+      case '}': $token = new Token('ATTR_END'); $this->skip_whitespace(); break;
 
       default: $token = new Token('LINE_CONTENT', $this->get_line($c)); break;
     }
