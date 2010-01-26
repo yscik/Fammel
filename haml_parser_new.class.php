@@ -18,6 +18,7 @@ class HamlRule
   public $action;
   public $content;
   public $selfclose;
+  public $indent_render;
   
   public $index;
   public $parent;
@@ -31,6 +32,7 @@ class HamlRule
   public function __construct($indent, $tag, $attr, $action, $content)
   {
     $this->indent = $indent;
+    $this->indent_render = $indent;
     $this->tag = $tag;
     $this->attr = $attr;
     $this->action = $action;
@@ -103,7 +105,7 @@ class HamlRule
       return $rendered;
     }
         
-    for($i = 0; $i < $this->indent; $i++)
+    for($i = 0; $i < $this->indent_render; $i++)
     {      
       $indent .= " ";
     }
@@ -288,11 +290,15 @@ class HamlParser extends lime_parser
   protected $_expect;
   protected $_content;
   
+  protected $_ws_in, $_ws_out;
+  
   function __construct()
   {
     $this->_cur_attr = $this->_last_parent = array();
     $this->_cur_tag = '';
     $this->_content = array();
+    $this->_ws_in = false;
+    $this->_ws_out = false;
     
     $this->_ast[0] = $this->_last_rule = new HamlRule(0, '', array(), HamlRule::ROOT, '');
     array_unshift($this->_last_parent, $this->_last_rule);
@@ -310,10 +316,9 @@ class HamlParser extends lime_parser
     $new_rule = new HamlRule($indent, $tag, $attr, $action, $content);
     $new_rule->index = count($this->_ast);
     
-    if($action == HamlRule::SELFCLOSE) 
-    {
-	$new_rule->selfclose = true;
-    }
+    if($action == HamlRule::SELFCLOSE)  $new_rule->selfclose = true;
+    
+    if($this->_ws_eat_in) $new_rule->indent_render = 0;
    
     $this->_expect->check($new_rule);
     
@@ -367,6 +372,11 @@ class HamlParser extends lime_parser
     $this->_cur_attr[$name] = $value;
   }
   
+  function process_attr_code($name, $value)
+  {
+    $this->_cur_attr[$name] = '<?php echo ' . $value . " ?>";
+  }
+  
   function process_content($value)
   {
     $this->_content[] = array(HamlRule::CONTENT, $value);
@@ -375,6 +385,11 @@ class HamlParser extends lime_parser
   function process_inline($value)
   {
     $this->_content[] = array(HamlRule::INLINE, $value);
+  }
+
+  function process_eat()
+  {
+    $this->_ws_eat_in = true;
   }
     
   function process_content_rule($indent, $content)
@@ -387,7 +402,7 @@ class HamlParser extends lime_parser
     $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::CONTENTMIX, $this->_content);
     $this->_content = array();
   }
-  
+
   function process_selfclosing_rule($indent)
   {
     $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::SELFCLOSE, "");

@@ -37,7 +37,7 @@ var $i = array (
   array (
     'rule' => 's 3',
     'INDENT' => 's 4',
-    '#' => 'r 39',
+    '#' => 'r 41',
   ),
   3 => 
   array (
@@ -51,22 +51,22 @@ var $i = array (
     'class_list' => 's 14',
     'CLASS' => 's 9',
     'tag_decl' => 's 16',
-    'tag_with_attributes' => 's 25',
-    'LINE_CONTENT' => 's 26',
-    'INLINE_CODE' => 's 27',
-    'contentmix' => 's 28',
-    'ESCAPED_ECHO' => 's 31',
-    'UNESCAPED_ECHO' => 's 32',
-    'PLAIN_ECHO' => 's 33',
-    'tag' => 's 34',
-    'echo' => 's 40',
-    'EXEC' => 's 42',
-    'HAML_COMMENT' => 's 44',
-    'COMMENT' => 's 46',
-    'DOCTYPE' => 's 48',
-    'ESCAPE' => 's 50',
-    'INDENT' => 'r 25',
-    '#' => 'r 25',
+    'tag_with_attributes' => 's 26',
+    'tag' => 's 27',
+    'LINE_CONTENT' => 's 29',
+    'INLINE_CODE' => 's 30',
+    'contentmix' => 's 43',
+    'ESCAPE' => 's 34',
+    'ESCAPED_ECHO' => 's 36',
+    'UNESCAPED_ECHO' => 's 37',
+    'PLAIN_ECHO' => 's 38',
+    'echo' => 's 44',
+    'EXEC' => 's 46',
+    'HAML_COMMENT' => 's 48',
+    'COMMENT' => 's 50',
+    'DOCTYPE' => 's 52',
+    'INDENT' => 'r 28',
+    '#' => 'r 28',
   ),
   5 => 
   array (
@@ -74,12 +74,14 @@ var $i = array (
     'class_list' => 's 10',
     'CLASS' => 's 9',
     'ATTR_START' => 'r 2',
+    'EATWS_IN' => 'r 2',
     'ESCAPED_ECHO' => 'r 2',
     'UNESCAPED_ECHO' => 'r 2',
     'PLAIN_ECHO' => 'r 2',
     'TAG_CLOSE' => 'r 2',
     'LINE_CONTENT' => 'r 2',
     'INLINE_CODE' => 'r 2',
+    'ESCAPE' => 'r 2',
     'INDENT' => 'r 2',
     '#' => 'r 2',
   ),
@@ -88,12 +90,14 @@ var $i = array (
     'class_list' => 's 7',
     'CLASS' => 's 9',
     'ATTR_START' => 'r 3',
+    'EATWS_IN' => 'r 3',
     'ESCAPED_ECHO' => 'r 3',
     'UNESCAPED_ECHO' => 'r 3',
     'PLAIN_ECHO' => 'r 3',
     'TAG_CLOSE' => 'r 3',
     'LINE_CONTENT' => 'r 3',
     'INLINE_CODE' => 'r 3',
+    'ESCAPE' => 'r 3',
     'INDENT' => 'r 3',
     '#' => 'r 3',
   ),
@@ -101,12 +105,14 @@ var $i = array (
   array (
     'CLASS' => 's 8',
     'ATTR_START' => 'r 4',
+    'EATWS_IN' => 'r 4',
     'ESCAPED_ECHO' => 'r 4',
     'UNESCAPED_ECHO' => 'r 4',
     'PLAIN_ECHO' => 'r 4',
     'TAG_CLOSE' => 'r 4',
     'LINE_CONTENT' => 'r 4',
     'INLINE_CODE' => 'r 4',
+    'ESCAPE' => 'r 4',
     'INDENT' => 'r 4',
     '#' => 'r 4',
   ),
@@ -115,12 +121,14 @@ var $i = array (
     'CLASS' => 'r 12',
     'ATTR_START' => 'r 12',
     'ID' => 'r 12',
+    'EATWS_IN' => 'r 12',
     'ESCAPED_ECHO' => 'r 12',
     'UNESCAPED_ECHO' => 'r 12',
     'PLAIN_ECHO' => 'r 12',
     'TAG_CLOSE' => 'r 12',
     'LINE_CONTENT' => 'r 12',
     'INLINE_CODE' => 'r 12',
+    'ESCAPE' => 'r 12',
     'INDENT' => 'r 12',
     '#' => 'r 12',
   ),
@@ -129,12 +137,14 @@ var $i = array (
     'CLASS' => 'r 11',
     'ID' => 'r 11',
     'ATTR_START' => 'r 11',
+    'EATWS_IN' => 'r 11',
     'ESCAPED_ECHO' => 'r 11',
     'UNESCAPED_ECHO' => 'r 11',
     'PLAIN_ECHO' => 'r 11',
     'TAG_CLOSE' => 'r 11',
     'LINE_CONTENT' => 'r 11',
     'INLINE_CODE' => 'r 11',
+    'ESCAPE' => 'r 11',
     'INDENT' => 'r 11',
     '#' => 'r 11',
   ),
@@ -143,24 +153,28 @@ var $i = array (
     'ID' => 's 11',
     'CLASS' => 's 8',
     'ATTR_START' => 'r 5',
+    'EATWS_IN' => 'r 5',
     'ESCAPED_ECHO' => 'r 5',
     'UNESCAPED_ECHO' => 'r 5',
     'PLAIN_ECHO' => 'r 5',
     'TAG_CLOSE' => 'r 5',
     'LINE_CONTENT' => 'r 5',
     'INLINE_CODE' => 'r 5',
+    'ESCAPE' => 'r 5',
     'INDENT' => 'r 5',
     '#' => 'r 5',
   ),
   11 => 
   array (
     'ATTR_START' => 'r 6',
+    'EATWS_IN' => 'r 6',
     'ESCAPED_ECHO' => 'r 6',
     'UNESCAPED_ECHO' => 'r 6',
     'PLAIN_ECHO' => 'r 6',
     'TAG_CLOSE' => 'r 6',
     'LINE_CONTENT' => 'r 6',
     'INLINE_CODE' => 'r 6',
+    'ESCAPE' => 'r 6',
     'INDENT' => 'r 6',
     '#' => 'r 6',
   ),
@@ -169,12 +183,14 @@ var $i = array (
     'class_list' => 's 13',
     'CLASS' => 's 9',
     'ATTR_START' => 'r 8',
+    'EATWS_IN' => 'r 8',
     'ESCAPED_ECHO' => 'r 8',
     'UNESCAPED_ECHO' => 'r 8',
     'PLAIN_ECHO' => 'r 8',
     'TAG_CLOSE' => 'r 8',
     'LINE_CONTENT' => 'r 8',
     'INLINE_CODE' => 'r 8',
+    'ESCAPE' => 'r 8',
     'INDENT' => 'r 8',
     '#' => 'r 8',
   ),
@@ -182,12 +198,14 @@ var $i = array (
   array (
     'CLASS' => 's 8',
     'ATTR_START' => 'r 7',
+    'EATWS_IN' => 'r 7',
     'ESCAPED_ECHO' => 'r 7',
     'UNESCAPED_ECHO' => 'r 7',
     'PLAIN_ECHO' => 'r 7',
     'TAG_CLOSE' => 'r 7',
     'LINE_CONTENT' => 'r 7',
     'INLINE_CODE' => 'r 7',
+    'ESCAPE' => 'r 7',
     'INDENT' => 'r 7',
     '#' => 'r 7',
   ),
@@ -196,24 +214,28 @@ var $i = array (
     'ID' => 's 15',
     'CLASS' => 's 8',
     'ATTR_START' => 'r 10',
+    'EATWS_IN' => 'r 10',
     'ESCAPED_ECHO' => 'r 10',
     'UNESCAPED_ECHO' => 'r 10',
     'PLAIN_ECHO' => 'r 10',
     'TAG_CLOSE' => 'r 10',
     'LINE_CONTENT' => 'r 10',
     'INLINE_CODE' => 'r 10',
+    'ESCAPE' => 'r 10',
     'INDENT' => 'r 10',
     '#' => 'r 10',
   ),
   15 => 
   array (
     'ATTR_START' => 'r 9',
+    'EATWS_IN' => 'r 9',
     'ESCAPED_ECHO' => 'r 9',
     'UNESCAPED_ECHO' => 'r 9',
     'PLAIN_ECHO' => 'r 9',
     'TAG_CLOSE' => 'r 9',
     'LINE_CONTENT' => 'r 9',
     'INLINE_CODE' => 'r 9',
+    'ESCAPE' => 'r 9',
     'INDENT' => 'r 9',
     '#' => 'r 9',
   ),
@@ -221,23 +243,27 @@ var $i = array (
   array (
     'tag_attributes' => 's 17',
     'ATTR_START' => 's 18',
+    'EATWS_IN' => 'r 14',
     'ESCAPED_ECHO' => 'r 14',
     'UNESCAPED_ECHO' => 'r 14',
     'PLAIN_ECHO' => 'r 14',
     'TAG_CLOSE' => 'r 14',
     'LINE_CONTENT' => 'r 14',
     'INLINE_CODE' => 'r 14',
+    'ESCAPE' => 'r 14',
     'INDENT' => 'r 14',
     '#' => 'r 14',
   ),
   17 => 
   array (
+    'EATWS_IN' => 'r 13',
     'ESCAPED_ECHO' => 'r 13',
     'UNESCAPED_ECHO' => 'r 13',
     'PLAIN_ECHO' => 'r 13',
     'TAG_CLOSE' => 'r 13',
     'LINE_CONTENT' => 'r 13',
     'INLINE_CODE' => 'r 13',
+    'ESCAPE' => 'r 13',
     'INDENT' => 'r 13',
     '#' => 'r 13',
   ),
@@ -253,211 +279,240 @@ var $i = array (
   ),
   20 => 
   array (
-    'ESCAPED_ECHO' => 'r 16',
-    'UNESCAPED_ECHO' => 'r 16',
-    'PLAIN_ECHO' => 'r 16',
-    'TAG_CLOSE' => 'r 16',
-    'LINE_CONTENT' => 'r 16',
-    'INLINE_CODE' => 'r 16',
-    'INDENT' => 'r 16',
-    '#' => 'r 16',
+    'EATWS_IN' => 'r 17',
+    'ESCAPED_ECHO' => 'r 17',
+    'UNESCAPED_ECHO' => 'r 17',
+    'PLAIN_ECHO' => 'r 17',
+    'TAG_CLOSE' => 'r 17',
+    'LINE_CONTENT' => 'r 17',
+    'INLINE_CODE' => 'r 17',
+    'ESCAPE' => 'r 17',
+    'INDENT' => 'r 17',
+    '#' => 'r 17',
   ),
   21 => 
   array (
     'ATTR_NAME' => 's 22',
-    'attribute_list' => 's 24',
+    'attribute_list' => 's 25',
   ),
   22 => 
   array (
     'ATTR_VALUE' => 's 23',
+    'INLINE_CODE' => 's 24',
   ),
   23 => 
   array (
-    'ATTR_SEP' => 'r 17',
-    'ATTR_END' => 'r 17',
+    'ATTR_SEP' => 'r 18',
+    'ATTR_END' => 'r 18',
   ),
   24 => 
   array (
-    'ATTR_SEP' => 's 21',
-    'ATTR_END' => 'r 18',
+    'ATTR_SEP' => 'r 19',
+    'ATTR_END' => 'r 19',
   ),
   25 => 
   array (
+    'ATTR_SEP' => 's 21',
+    'ATTR_END' => 'r 20',
+  ),
+  26 => 
+  array (
+    'EATWS_IN' => 'r 15',
     'ESCAPED_ECHO' => 'r 15',
     'UNESCAPED_ECHO' => 'r 15',
     'PLAIN_ECHO' => 'r 15',
     'TAG_CLOSE' => 'r 15',
     'LINE_CONTENT' => 'r 15',
     'INLINE_CODE' => 'r 15',
+    'ESCAPE' => 'r 15',
     'INDENT' => 'r 15',
     '#' => 'r 15',
   ),
-  26 => 
-  array (
-    'LINE_CONTENT' => 'r 21',
-    'INLINE_CODE' => 'r 21',
-    'INDENT' => 'r 21',
-    '#' => 'r 21',
-  ),
   27 => 
   array (
-    'LINE_CONTENT' => 'r 22',
-    'INLINE_CODE' => 'r 22',
-    'INDENT' => 'r 22',
-    '#' => 'r 22',
+    'EATWS_IN' => 's 28',
+    'LINE_CONTENT' => 's 29',
+    'INLINE_CODE' => 's 30',
+    'contentmix' => 's 31',
+    'ESCAPE' => 's 34',
+    'ESCAPED_ECHO' => 's 36',
+    'UNESCAPED_ECHO' => 's 37',
+    'PLAIN_ECHO' => 's 38',
+    'TAG_CLOSE' => 's 39',
+    'echo' => 's 40',
+    'INDENT' => 'r 28',
+    '#' => 'r 28',
   ),
   28 => 
   array (
-    'LINE_CONTENT' => 's 29',
-    'INLINE_CODE' => 's 30',
-    'INDENT' => 'r 37',
-    '#' => 'r 37',
+    'ESCAPED_ECHO' => 'r 16',
+    'UNESCAPED_ECHO' => 'r 16',
+    'PLAIN_ECHO' => 'r 16',
+    'EATWS_IN' => 'r 16',
+    'TAG_CLOSE' => 'r 16',
+    'LINE_CONTENT' => 'r 16',
+    'INLINE_CODE' => 'r 16',
+    'ESCAPE' => 'r 16',
+    'INDENT' => 'r 16',
+    '#' => 'r 16',
   ),
   29 => 
   array (
-    'INLINE_CODE' => 'r 23',
     'LINE_CONTENT' => 'r 23',
+    'INLINE_CODE' => 'r 23',
     'INDENT' => 'r 23',
     '#' => 'r 23',
   ),
   30 => 
   array (
-    'INLINE_CODE' => 'r 24',
     'LINE_CONTENT' => 'r 24',
+    'INLINE_CODE' => 'r 24',
     'INDENT' => 'r 24',
     '#' => 'r 24',
   ),
   31 => 
   array (
+    'LINE_CONTENT' => 's 32',
+    'INLINE_CODE' => 's 33',
+    'INDENT' => 'r 32',
+    '#' => 'r 32',
+  ),
+  32 => 
+  array (
+    'INLINE_CODE' => 'r 25',
+    'LINE_CONTENT' => 'r 25',
+    'INDENT' => 'r 25',
+    '#' => 'r 25',
+  ),
+  33 => 
+  array (
+    'INLINE_CODE' => 'r 26',
     'LINE_CONTENT' => 'r 26',
     'INDENT' => 'r 26',
     '#' => 'r 26',
   ),
-  32 => 
-  array (
-    'LINE_CONTENT' => 'r 27',
-    'INDENT' => 'r 27',
-    '#' => 'r 27',
-  ),
-  33 => 
-  array (
-    'LINE_CONTENT' => 'r 28',
-    'INDENT' => 'r 28',
-    '#' => 'r 28',
-  ),
   34 => 
-  array (
-    'LINE_CONTENT' => 's 26',
-    'INLINE_CODE' => 's 27',
-    'contentmix' => 's 35',
-    'ESCAPED_ECHO' => 's 31',
-    'UNESCAPED_ECHO' => 's 32',
-    'PLAIN_ECHO' => 's 33',
-    'TAG_CLOSE' => 's 36',
-    'echo' => 's 37',
-    'INDENT' => 'r 25',
-    '#' => 'r 25',
-  ),
-  35 => 
   array (
     'LINE_CONTENT' => 's 29',
     'INLINE_CODE' => 's 30',
-    'INDENT' => 'r 29',
-    '#' => 'r 29',
+    'contentmix' => 's 35',
+    'ESCAPE' => 's 34',
+    'INDENT' => 'r 28',
+    '#' => 'r 28',
+  ),
+  35 => 
+  array (
+    'LINE_CONTENT' => 's 32',
+    'INLINE_CODE' => 's 33',
+    'INDENT' => 'r 27',
+    '#' => 'r 27',
   ),
   36 => 
   array (
-    'INDENT' => 'r 30',
-    '#' => 'r 30',
+    'LINE_CONTENT' => 'r 29',
+    'INDENT' => 'r 29',
+    '#' => 'r 29',
   ),
   37 => 
   array (
-    'LINE_CONTENT' => 's 38',
-    'content' => 's 39',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
+    'LINE_CONTENT' => 'r 30',
+    'INDENT' => 'r 30',
+    '#' => 'r 30',
   ),
   38 => 
   array (
-    'INDENT' => 'r 19',
-    '#' => 'r 19',
-  ),
-  39 => 
-  array (
+    'LINE_CONTENT' => 'r 31',
     'INDENT' => 'r 31',
     '#' => 'r 31',
   ),
-  40 => 
-  array (
-    'LINE_CONTENT' => 's 38',
-    'content' => 's 41',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
-  ),
-  41 => 
-  array (
-    'INDENT' => 'r 32',
-    '#' => 'r 32',
-  ),
-  42 => 
-  array (
-    'LINE_CONTENT' => 's 38',
-    'content' => 's 43',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
-  ),
-  43 => 
+  39 => 
   array (
     'INDENT' => 'r 33',
     '#' => 'r 33',
   ),
-  44 => 
+  40 => 
   array (
-    'LINE_CONTENT' => 's 38',
-    'content' => 's 45',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
+    'LINE_CONTENT' => 's 41',
+    'content' => 's 42',
+    'INDENT' => 'r 22',
+    '#' => 'r 22',
   ),
-  45 => 
+  41 => 
+  array (
+    'INDENT' => 'r 21',
+    '#' => 'r 21',
+  ),
+  42 => 
   array (
     'INDENT' => 'r 34',
     '#' => 'r 34',
   ),
-  46 => 
+  43 => 
   array (
-    'LINE_CONTENT' => 's 38',
-    'content' => 's 47',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
+    'LINE_CONTENT' => 's 32',
+    'INLINE_CODE' => 's 33',
+    'INDENT' => 'r 40',
+    '#' => 'r 40',
   ),
-  47 => 
+  44 => 
+  array (
+    'LINE_CONTENT' => 's 41',
+    'content' => 's 45',
+    'INDENT' => 'r 22',
+    '#' => 'r 22',
+  ),
+  45 => 
   array (
     'INDENT' => 'r 35',
     '#' => 'r 35',
   ),
-  48 => 
+  46 => 
   array (
-    'LINE_CONTENT' => 's 38',
-    'content' => 's 49',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
+    'LINE_CONTENT' => 's 41',
+    'content' => 's 47',
+    'INDENT' => 'r 22',
+    '#' => 'r 22',
   ),
-  49 => 
+  47 => 
   array (
     'INDENT' => 'r 36',
     '#' => 'r 36',
   ),
+  48 => 
+  array (
+    'LINE_CONTENT' => 's 41',
+    'content' => 's 49',
+    'INDENT' => 'r 22',
+    '#' => 'r 22',
+  ),
+  49 => 
+  array (
+    'INDENT' => 'r 37',
+    '#' => 'r 37',
+  ),
   50 => 
   array (
-    'LINE_CONTENT' => 's 38',
+    'LINE_CONTENT' => 's 41',
     'content' => 's 51',
-    'INDENT' => 'r 20',
-    '#' => 'r 20',
+    'INDENT' => 'r 22',
+    '#' => 'r 22',
   ),
   51 => 
   array (
     'INDENT' => 'r 38',
     '#' => 'r 38',
+  ),
+  52 => 
+  array (
+    'LINE_CONTENT' => 's 41',
+    'content' => 's 53',
+    'INDENT' => 'r 22',
+    '#' => 'r 22',
+  ),
+  53 => 
+  array (
+    'INDENT' => 'r 39',
+    '#' => 'r 39',
   ),
 );
 function reduce_0_haml_file_1($tokens, &$result) {
@@ -601,17 +656,25 @@ $result = reset($tokens);
 
 }
 
-function reduce_16_tag_attributes_1($tokens, &$result) {
+function reduce_16_tag_3($tokens, &$result) {
 #
-# (16) tag_attributes :=  ATTR_START  attribute_list  ATTR_END
+# (16) tag :=  tag  EATWS_IN
+#
+$result = reset($tokens);
+ $this->process_eat(); 
+}
+
+function reduce_17_tag_attributes_1($tokens, &$result) {
+#
+# (17) tag_attributes :=  ATTR_START  attribute_list  ATTR_END
 #
 $result = reset($tokens);
 
 }
 
-function reduce_17_attribute_list_1($tokens, &$result) {
+function reduce_18_attribute_list_1($tokens, &$result) {
 #
-# (17) attribute_list :=  ATTR_NAME  ATTR_VALUE
+# (18) attribute_list :=  ATTR_NAME  ATTR_VALUE
 #
 $result = reset($tokens);
 $n =& $tokens[0];
@@ -619,104 +682,122 @@ $v =& $tokens[1];
  $this->process_attr($n, $v);
 }
 
-function reduce_18_attribute_list_2($tokens, &$result) {
+function reduce_19_attribute_list_2($tokens, &$result) {
 #
-# (18) attribute_list :=  attribute_list  ATTR_SEP  attribute_list
+# (19) attribute_list :=  ATTR_NAME  INLINE_CODE
+#
+$result = reset($tokens);
+$n =& $tokens[0];
+$v =& $tokens[1];
+ $this->process_attr_code($n, $v);
+}
+
+function reduce_20_attribute_list_3($tokens, &$result) {
+#
+# (20) attribute_list :=  attribute_list  ATTR_SEP  attribute_list
 #
 $result = reset($tokens);
 
 }
 
-function reduce_19_content_1($tokens, &$result) {
+function reduce_21_content_1($tokens, &$result) {
 #
-# (19) content :=  LINE_CONTENT
-#
-$result = reset($tokens);
-
-}
-
-function reduce_20_content_2($tokens, &$result) {
-#
-# (20) content :=
+# (21) content :=  LINE_CONTENT
 #
 $result = reset($tokens);
 
 }
 
-function reduce_21_contentmix_1($tokens, &$result) {
+function reduce_22_content_2($tokens, &$result) {
 #
-# (21) contentmix :=  LINE_CONTENT
+# (22) content :=
+#
+$result = reset($tokens);
+
+}
+
+function reduce_23_contentmix_1($tokens, &$result) {
+#
+# (23) contentmix :=  LINE_CONTENT
 #
 $result = reset($tokens);
 $l =& $tokens[0];
  $this->process_content($l); 
 }
 
-function reduce_22_contentmix_2($tokens, &$result) {
+function reduce_24_contentmix_2($tokens, &$result) {
 #
-# (22) contentmix :=  INLINE_CODE
+# (24) contentmix :=  INLINE_CODE
 #
 $result = reset($tokens);
 $c =& $tokens[0];
  $this->process_inline($c); 
 }
 
-function reduce_23_contentmix_3($tokens, &$result) {
+function reduce_25_contentmix_3($tokens, &$result) {
 #
-# (23) contentmix :=  contentmix  LINE_CONTENT
+# (25) contentmix :=  contentmix  LINE_CONTENT
 #
 $result = reset($tokens);
 $l =& $tokens[1];
  $this->process_content($l); 
 }
 
-function reduce_24_contentmix_4($tokens, &$result) {
+function reduce_26_contentmix_4($tokens, &$result) {
 #
-# (24) contentmix :=  contentmix  INLINE_CODE
+# (26) contentmix :=  contentmix  INLINE_CODE
 #
 $result = reset($tokens);
 $c =& $tokens[1];
  $this->process_inline($c); 
 }
 
-function reduce_25_contentmix_5($tokens, &$result) {
+function reduce_27_contentmix_5($tokens, &$result) {
 #
-# (25) contentmix :=
+# (27) contentmix :=  ESCAPE  contentmix
 #
 $result = reset($tokens);
 
 }
 
-function reduce_26_echo_1($tokens, &$result) {
+function reduce_28_contentmix_6($tokens, &$result) {
 #
-# (26) echo :=  ESCAPED_ECHO
+# (28) contentmix :=
+#
+$result = reset($tokens);
+
+}
+
+function reduce_29_echo_1($tokens, &$result) {
+#
+# (29) echo :=  ESCAPED_ECHO
 #
 $result = reset($tokens);
 $e =& $tokens[0];
 global $escaping; $escaping = 'ESCAPED_ECHO';
 }
 
-function reduce_27_echo_2($tokens, &$result) {
+function reduce_30_echo_2($tokens, &$result) {
 #
-# (27) echo :=  UNESCAPED_ECHO
+# (30) echo :=  UNESCAPED_ECHO
 #
 $result = reset($tokens);
 $e =& $tokens[0];
 global $escaping; $escaping = 'UNESCAPED_ECHO';
 }
 
-function reduce_28_echo_3($tokens, &$result) {
+function reduce_31_echo_3($tokens, &$result) {
 #
-# (28) echo :=  PLAIN_ECHO
+# (31) echo :=  PLAIN_ECHO
 #
 $result = reset($tokens);
 $e =& $tokens[0];
 global $escaping; $escaping = 'PLAIN_ECHO';
 }
 
-function reduce_29_rule_1($tokens, &$result) {
+function reduce_32_rule_1($tokens, &$result) {
 #
-# (29) rule :=  INDENT  tag  contentmix
+# (32) rule :=  INDENT  tag  contentmix
 #
 $result = reset($tokens);
 $i =& $tokens[0];
@@ -724,18 +805,18 @@ $c =& $tokens[2];
  /* echo "INDENT/i tag content/c ($i, $c)\n";      */  $this->process_contentmix_rule($i, $c); 
 }
 
-function reduce_30_rule_2($tokens, &$result) {
+function reduce_33_rule_2($tokens, &$result) {
 #
-# (30) rule :=  INDENT  tag  TAG_CLOSE
+# (33) rule :=  INDENT  tag  TAG_CLOSE
 #
 $result = reset($tokens);
 $i =& $tokens[0];
  /* echo "INDENT/i tag TAG_CLOSE ($i)\n";      */  $this->process_selfclosing_rule($i); 
 }
 
-function reduce_31_rule_3($tokens, &$result) {
+function reduce_34_rule_3($tokens, &$result) {
 #
-# (31) rule :=  INDENT  tag  echo  content
+# (34) rule :=  INDENT  tag  echo  content
 #
 $result = reset($tokens);
 $i =& $tokens[0];
@@ -743,9 +824,9 @@ $c =& $tokens[3];
  /* echo "INDENT/i tag echo content/c  ($i, $c) $escaping\n"; */  global $escaping; $this->process_echo_rule($i, $c, $escaping); 
 }
 
-function reduce_32_rule_4($tokens, &$result) {
+function reduce_35_rule_4($tokens, &$result) {
 #
-# (32) rule :=  INDENT  echo  content
+# (35) rule :=  INDENT  echo  content
 #
 $result = reset($tokens);
 $i =& $tokens[0];
@@ -753,9 +834,9 @@ $c =& $tokens[2];
  /* echo "INDENT/i echo content/c ($i, $c) $escaping\n"; */      global $escaping; $this->process_echo_rule($i, $c, $escaping); 
 }
 
-function reduce_33_rule_5($tokens, &$result) {
+function reduce_36_rule_5($tokens, &$result) {
 #
-# (33) rule :=  INDENT  EXEC  content
+# (36) rule :=  INDENT  EXEC  content
 #
 $result = reset($tokens);
 $i =& $tokens[0];
@@ -763,18 +844,18 @@ $c =& $tokens[2];
  /* echo "INDENT/i EXEC content/c ($i, $c)\n";     */  $this->process_exec_rule($i, $c); 
 }
 
-function reduce_34_rule_6($tokens, &$result) {
+function reduce_37_rule_6($tokens, &$result) {
 #
-# (34) rule :=  INDENT  HAML_COMMENT  content
+# (37) rule :=  INDENT  HAML_COMMENT  content
 #
 $result = reset($tokens);
 $i =& $tokens[0];
  /* echo "INDENT/i EXEC content/c ($i, $c)\n";     */  
 }
 
-function reduce_35_rule_7($tokens, &$result) {
+function reduce_38_rule_7($tokens, &$result) {
 #
-# (35) rule :=  INDENT  COMMENT  content
+# (38) rule :=  INDENT  COMMENT  content
 #
 $result = reset($tokens);
 $i =& $tokens[0];
@@ -782,18 +863,18 @@ $c =& $tokens[2];
  /* echo "INDENT/i COMMENT content/c ($i, $c)\n";  */  $this->process_comment_rule($i, $c); 
 }
 
-function reduce_36_rule_8($tokens, &$result) {
+function reduce_39_rule_8($tokens, &$result) {
 #
-# (36) rule :=  INDENT  DOCTYPE  content
+# (39) rule :=  INDENT  DOCTYPE  content
 #
 $result = reset($tokens);
 $c =& $tokens[2];
  /* "INDENT DOCTYPE content/c ($c)\n";             */  $this->process_doctype($c); 
 }
 
-function reduce_37_rule_9($tokens, &$result) {
+function reduce_40_rule_9($tokens, &$result) {
 #
-# (37) rule :=  INDENT  contentmix
+# (40) rule :=  INDENT  contentmix
 #
 $result = reset($tokens);
 $i =& $tokens[0];
@@ -801,19 +882,9 @@ $c =& $tokens[1];
  /* echo "INDENT/i content/c ($i, $c)\n";          */  $this->process_contentmix_rule($i, $c); 
 }
 
-function reduce_38_rule_10($tokens, &$result) {
+function reduce_41_start_1($tokens, &$result) {
 #
-# (38) rule :=  INDENT  ESCAPE  content
-#
-$result = reset($tokens);
-$i =& $tokens[0];
-$c =& $tokens[2];
-$this->process_content_rule($i, $c); 
-}
-
-function reduce_39_start_1($tokens, &$result) {
-#
-# (39) 'start' :=  haml_file
+# (41) 'start' :=  haml_file
 #
 $result = reset($tokens);
 
@@ -836,30 +907,32 @@ var $method = array (
   13 => 'reduce_13_tag_with_attributes_1',
   14 => 'reduce_14_tag_1',
   15 => 'reduce_15_tag_2',
-  16 => 'reduce_16_tag_attributes_1',
-  17 => 'reduce_17_attribute_list_1',
-  18 => 'reduce_18_attribute_list_2',
-  19 => 'reduce_19_content_1',
-  20 => 'reduce_20_content_2',
-  21 => 'reduce_21_contentmix_1',
-  22 => 'reduce_22_contentmix_2',
-  23 => 'reduce_23_contentmix_3',
-  24 => 'reduce_24_contentmix_4',
-  25 => 'reduce_25_contentmix_5',
-  26 => 'reduce_26_echo_1',
-  27 => 'reduce_27_echo_2',
-  28 => 'reduce_28_echo_3',
-  29 => 'reduce_29_rule_1',
-  30 => 'reduce_30_rule_2',
-  31 => 'reduce_31_rule_3',
-  32 => 'reduce_32_rule_4',
-  33 => 'reduce_33_rule_5',
-  34 => 'reduce_34_rule_6',
-  35 => 'reduce_35_rule_7',
-  36 => 'reduce_36_rule_8',
-  37 => 'reduce_37_rule_9',
-  38 => 'reduce_38_rule_10',
-  39 => 'reduce_39_start_1',
+  16 => 'reduce_16_tag_3',
+  17 => 'reduce_17_tag_attributes_1',
+  18 => 'reduce_18_attribute_list_1',
+  19 => 'reduce_19_attribute_list_2',
+  20 => 'reduce_20_attribute_list_3',
+  21 => 'reduce_21_content_1',
+  22 => 'reduce_22_content_2',
+  23 => 'reduce_23_contentmix_1',
+  24 => 'reduce_24_contentmix_2',
+  25 => 'reduce_25_contentmix_3',
+  26 => 'reduce_26_contentmix_4',
+  27 => 'reduce_27_contentmix_5',
+  28 => 'reduce_28_contentmix_6',
+  29 => 'reduce_29_echo_1',
+  30 => 'reduce_30_echo_2',
+  31 => 'reduce_31_echo_3',
+  32 => 'reduce_32_rule_1',
+  33 => 'reduce_33_rule_2',
+  34 => 'reduce_34_rule_3',
+  35 => 'reduce_35_rule_4',
+  36 => 'reduce_36_rule_5',
+  37 => 'reduce_37_rule_6',
+  38 => 'reduce_38_rule_7',
+  39 => 'reduce_39_rule_8',
+  40 => 'reduce_40_rule_9',
+  41 => 'reduce_41_start_1',
 );
 var $a = array (
   0 => 
@@ -960,98 +1033,98 @@ var $a = array (
   ),
   16 => 
   array (
-    'symbol' => 'tag_attributes',
-    'len' => 3,
+    'symbol' => 'tag',
+    'len' => 2,
     'replace' => true,
   ),
   17 => 
   array (
-    'symbol' => 'attribute_list',
-    'len' => 2,
+    'symbol' => 'tag_attributes',
+    'len' => 3,
     'replace' => true,
   ),
   18 => 
   array (
     'symbol' => 'attribute_list',
-    'len' => 3,
+    'len' => 2,
     'replace' => true,
   ),
   19 => 
   array (
-    'symbol' => 'content',
-    'len' => 1,
+    'symbol' => 'attribute_list',
+    'len' => 2,
     'replace' => true,
   ),
   20 => 
   array (
-    'symbol' => 'content',
-    'len' => 0,
+    'symbol' => 'attribute_list',
+    'len' => 3,
     'replace' => true,
   ),
   21 => 
   array (
-    'symbol' => 'contentmix',
+    'symbol' => 'content',
     'len' => 1,
     'replace' => true,
   ),
   22 => 
   array (
-    'symbol' => 'contentmix',
-    'len' => 1,
+    'symbol' => 'content',
+    'len' => 0,
     'replace' => true,
   ),
   23 => 
   array (
     'symbol' => 'contentmix',
-    'len' => 2,
+    'len' => 1,
     'replace' => true,
   ),
   24 => 
   array (
     'symbol' => 'contentmix',
-    'len' => 2,
+    'len' => 1,
     'replace' => true,
   ),
   25 => 
   array (
     'symbol' => 'contentmix',
-    'len' => 0,
+    'len' => 2,
     'replace' => true,
   ),
   26 => 
   array (
-    'symbol' => 'echo',
-    'len' => 1,
+    'symbol' => 'contentmix',
+    'len' => 2,
     'replace' => true,
   ),
   27 => 
   array (
-    'symbol' => 'echo',
-    'len' => 1,
+    'symbol' => 'contentmix',
+    'len' => 2,
     'replace' => true,
   ),
   28 => 
   array (
-    'symbol' => 'echo',
-    'len' => 1,
+    'symbol' => 'contentmix',
+    'len' => 0,
     'replace' => true,
   ),
   29 => 
   array (
-    'symbol' => 'rule',
-    'len' => 3,
+    'symbol' => 'echo',
+    'len' => 1,
     'replace' => true,
   ),
   30 => 
   array (
-    'symbol' => 'rule',
-    'len' => 3,
+    'symbol' => 'echo',
+    'len' => 1,
     'replace' => true,
   ),
   31 => 
   array (
-    'symbol' => 'rule',
-    'len' => 4,
+    'symbol' => 'echo',
+    'len' => 1,
     'replace' => true,
   ),
   32 => 
@@ -1069,7 +1142,7 @@ var $a = array (
   34 => 
   array (
     'symbol' => 'rule',
-    'len' => 3,
+    'len' => 4,
     'replace' => true,
   ),
   35 => 
@@ -1087,7 +1160,7 @@ var $a = array (
   37 => 
   array (
     'symbol' => 'rule',
-    'len' => 2,
+    'len' => 3,
     'replace' => true,
   ),
   38 => 
@@ -1097,6 +1170,18 @@ var $a = array (
     'replace' => true,
   ),
   39 => 
+  array (
+    'symbol' => 'rule',
+    'len' => 3,
+    'replace' => true,
+  ),
+  40 => 
+  array (
+    'symbol' => 'rule',
+    'len' => 2,
+    'replace' => true,
+  ),
+  41 => 
   array (
     'symbol' => '\'start\'',
     'len' => 1,

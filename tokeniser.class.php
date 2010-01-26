@@ -10,6 +10,7 @@ class Token
   
   function __construct($type, $value = '', $trim = true)
   {
+    #var_dump($type . ": " . $value);
     $this->_type = $type;
 
     $this->_value = $trim ? trim($value) : $value;
@@ -65,6 +66,7 @@ class Tokeniser
     $this->_column = 0;
     $this->_just_escaped = false;
     $this->_tag = false;
+
   }
   
   public function input()
@@ -95,7 +97,7 @@ class Tokeniser
   }
   
   public function get_token()
-  {    
+  {
     $token = null;
         
     $c = $this->get_char();
@@ -111,13 +113,13 @@ class Tokeniser
     {
       $this->_just_escaped = false;
       
-      return new Token('LINE_CONTENT', $this->get_line($c));
+      return new Token('LINE_CONTENT', $this->get_line($c), false);
     }
     
     if($this->_inline == 2)
     {
       $this->_inline = 0;
-      return new Token('LINE_CONTENT', $this->get_line(''), false);
+      return new Token('LINE_CONTENT', $this->get_line($c), false);
     }
     
     switch($c)
@@ -130,15 +132,22 @@ class Tokeniser
          $this->_just_escaped = true;
          
          break;
-        
+      
       case ' ': $token = $this->get_token(); break;
       
       case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); $this->_tag = true; break;
       case '#': 
+      if($this->get_char() == "{")
       {
-	  $token = new Token('ID', $this->get_name()); $this->_tag = true; break;
+	  $this->_inline = 2;
+	  $token = new Token('INLINE_CODE', $this->get_inline_code('')); break;
       }
-      case '.': $token = new Token('CLASS', $this->get_name()); $this->_tag = true; break;
+      else
+      {
+	  $this->rewind();
+	  $token = new Token('ID', $this->get_name()); $this->_tag = true;  $this->skip_whitespace(); break;
+      }
+      case '.': $token = new Token('CLASS', $this->get_name()); $this->_tag = true; $this->skip_whitespace();  break;
       
       case '-':
         $c = $this->get_char();
@@ -177,7 +186,7 @@ class Tokeniser
         else
         {
           $this->rewind();
-          $token = new Token('LINE_CONTENT', $this->get_line('&'));
+          $token = new Token('LINE_CONTENT', $this->get_line('&'), false);
         }
         
         break;
@@ -197,12 +206,18 @@ class Tokeniser
           {
             $token = new Token('ATTR_VALUE', $this->get_attr_value(''));
           }
+	  else if($c == '#' && $this->get_char() == "{")
+          {
+	      	$token = new Token('INLINE_CODE', $this->get_inline_code(''));
+          }
+
           else
           {
             // This is an error condition, but we should let the Parser handle it
             // instead of dying here. Return something plausible but grammatically incorrect
-
-            $token = new Token('LINE_CONTENT', $this->get_line($c));
+	    
+	    $this->rewind();
+            $token = new Token('LINE_CONTENT', $this->get_line($c), false);
           }
         }
         else
@@ -242,21 +257,12 @@ class Tokeniser
         
         break;
         
-      case '{': 
-      {
-	if($this->_inline == 1)
-	{
-	  $token = new Token('INLINE_CODE', $this->get_inline_code(''));
-	  $this->_inline = 2;
-	}
-        else
-	{
-	  $token = new Token('ATTR_START'); $this->skip_whitespace(); 
-	}
-	break;
-      }
+      case '{': $token = new Token('ATTR_START'); $this->skip_whitespace(); break;
       case ',': $token = new Token('ATTR_SEP'); $this->skip_whitespace(); break;
       case '}': $token = new Token('ATTR_END'); $this->skip_whitespace(); break;
+      
+      case '<':  $token = new Token('EATWS_IN'); $this->skip_whitespace(); break;
+      #case '>':  $token = new Token('EATWS_OUT'); $this->skip_whitespace(); break;
 
       default: $token = new Token('LINE_CONTENT', $this->get_line($c), false); break;
     }
@@ -360,7 +366,7 @@ class Tokeniser
     
     do
     {
-      if($c == "#" && $this->get_char() == "{") { $this->_inline = 1; break; }
+      if($c == "#" && $this->get_char() == "{") { $this->rewind(); $this->_inline = 1; break; }
       
       $token = "$token$c";
     }
@@ -446,7 +452,8 @@ class Tokeniser
     }
     while(strlen($c = $this->get_char()));
     
-    $this->rewind();
+    //$this->rewind();
+    
     return $token;
     
   }  
