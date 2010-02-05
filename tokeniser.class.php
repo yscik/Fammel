@@ -56,8 +56,6 @@ class Tokeniser
   
   protected $_tag;
   
-  protected $_inline;
-  
   public function __construct($input)
   {
     $this->_input = rtrim($input) . "\n";
@@ -66,7 +64,7 @@ class Tokeniser
     $this->_column = 0;
     $this->_just_escaped = false;
     $this->_tag = false;
-
+    
   }
   
   public function input()
@@ -116,12 +114,6 @@ class Tokeniser
       return new Token('LINE_CONTENT', $this->get_line($c), false);
     }
     
-    if($this->_inline == 2)
-    {
-      $this->_inline = 0;
-      return new Token('LINE_CONTENT', $this->get_line($c), false);
-    }
-    
     switch($c)
     {
       case "": $token = new Token('EOF'); break;
@@ -136,17 +128,7 @@ class Tokeniser
       case ' ': $token = $this->get_token(); break;
       
       case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); $this->_tag = true; break;
-      case '#': 
-      if($this->get_char() == "{")
-      {
-	  $this->_inline = 2;
-	  $token = new Token('INLINE_CODE', $this->get_inline_code('')); break;
-      }
-      else
-      {
-	  $this->rewind();
-	  $token = new Token('ID', $this->get_name()); $this->_tag = true;  $this->skip_whitespace(); break;
-      }
+      case '#': $token = new Token('ID', $this->get_name()); $this->_tag = true;  $this->skip_whitespace(); break;
       case '.': $token = new Token('CLASS', $this->get_name()); $this->_tag = true; $this->skip_whitespace();  break;
       
       case '-':
@@ -206,11 +188,6 @@ class Tokeniser
           {
             $token = new Token('ATTR_VALUE', $this->get_attr_value(''));
           }
-	  else if($c == '#' && $this->get_char() == "{")
-          {
-	      	$token = new Token('INLINE_CODE', $this->get_inline_code(''));
-          }
-
           else
           {
             // This is an error condition, but we should let the Parser handle it
@@ -261,7 +238,9 @@ class Tokeniser
       case ',': $token = new Token('ATTR_SEP'); $this->skip_whitespace(); break;
       case '}': $token = new Token('ATTR_END'); $this->skip_whitespace(); break;
       
-      case '<':  $token = new Token('EATWS_IN'); $this->skip_whitespace(); break;
+      case '(': $token = new Token('HTML_ATTR', $this->get_attr_html('')); $this->skip_whitespace(); break;
+      
+      #case '<':  $token = new Token('EATWS_IN'); $this->skip_whitespace(); break;
       #case '>':  $token = new Token('EATWS_OUT'); $this->skip_whitespace(); break;
 
       default: $token = new Token('LINE_CONTENT', $this->get_line($c), false); break;
@@ -366,8 +345,6 @@ class Tokeniser
     
     do
     {
-      if($c == "#" && $this->get_char() == "{") { $this->rewind(); $this->_inline = 1; break; }
-      
       $token = "$token$c";
     }
     while(strlen($c = $this->get_char()) && $c != "\n");
@@ -437,26 +414,24 @@ class Tokeniser
     $this->rewind();
     return $token;
   }
-  
-  public function get_inline_code($c)
+    
+  public function get_attr_html($c)
   {
     $token = '';
     
     $braces = 1;
     do
     {
-      if($c == "{") $braces++;
-      if($c == "}" && --$braces == 0) break; 
+      if($c == "(") $braces++;
+      if($c == ")" && --$braces == 0) break; 
       
       $token = "$token$c";
     }
     while(strlen($c = $this->get_char()));
     
-    //$this->rewind();
-    
     return $token;
     
-  }  
+  } 
 }
 
 /*

@@ -18,7 +18,7 @@ class HamlRule
   public $action;
   public $content;
   public $selfclose;
-  public $indent_render;
+  public $indent_in_render, $indent_out_render;
   
   public $index;
   public $parent;
@@ -32,11 +32,12 @@ class HamlRule
   public function __construct($indent, $tag, $attr, $action, $content)
   {
     $this->indent = $indent;
-    $this->indent_render = $indent;
+    $this->indent_out_render = true;
+    $this->indent_in_render = true;
     $this->tag = $tag;
     $this->attr = $attr;
     $this->action = $action;
-    $this->content = is_array($content) ? $content : trim($content);
+    $this->content = trim($content);
 
     $this->parent = $this->next = $this->prev = null; 
     $this->index = 0;
@@ -55,7 +56,7 @@ class HamlRule
   {
     global $indent_size;
     
-    $indent = $rendered = '';
+    $indent_in = $indent_out = $rendered = '';
     
     if($this->action == HamlRule::DOCTYPE)
     {
@@ -105,41 +106,44 @@ class HamlRule
       return $rendered;
     }
         
-    for($i = 0; $i < $this->indent_render; $i++)
-    {      
-      $indent .= " ";
+    if($this->indent_out_render)
+    {
+      $indent_out = str_repeat(" ", $this->indent);
+    }
+    
+    if($this->indent_in_render)
+    {
+      $indent_in = str_repeat(" ", $this->indent + $indent_size);
     }
       
     if($this->tag)
     {
-      $rendered .= "$indent<$this->tag";
+      $rendered .= "$indent_out<$this->tag";
 
       if(count($this->attr))
       {
         asort($this->attr);
         foreach($this->attr as $name => $value)
         {
-          $rendered .= " $name=\"$value\"";
+          $rendered .= ($name == "*") ?  " $value" : " $name=\"$value\"";
         }
       }
       
       if($this->selfclose) $rendered .= " /";
-      $rendered .= ">\n";
+      $rendered .= ">";
+      if(!$this->content) $rendered .= "\n";
     }
     
-    if($this->tag && $this->content)
+    if($this->tag && $this->content && $this->indent_in_render)
     {
-      for($i = 0; $i < $indent_size; $i++)
-      {      
-        $rendered .= " ";
-      }
+
     }
     
     switch($this->action)
     {
       case HamlRule::COMMENT:
 
-        $rendered .= "$indent<!-- $this->content";
+        $rendered .= "$indent_in<!-- $this->content";
         
         if($this->next->indent <= $this->indent)
         {
@@ -152,30 +156,13 @@ class HamlRule
         
         break;
         
-      case HamlRule::CONTENTMIX:
-      {
-         $rendered .= "$indent";
-
-         if(is_array($this->content)) foreach($this->content as $cbit)
-	 {
-	   list($type, $value) = $cbit;
-	   
-	   switch($type)
-	   {
-	     case HamlRule::CONTENT: $rendered .= "$value";  break;
-	     case HamlRule::INLINE: $rendered .= "<?php echo $value; ?>";  break;
-	   }
-	   
-	 }
-	 break;
-      }
-      case HamlRule::CONTENT:   if($this->content) $rendered .= "$indent$this->content"; break;
-      case HamlRule::EXEC_ECHO: $rendered .= "$indent<?php echo $this->content ?>"; break;
+      case HamlRule::CONTENT:   if($this->content) $rendered .= $this->content; break;
+      case HamlRule::EXEC_ECHO: $rendered .= "<?php echo {$this->content} ?>"; break;
       case HamlRule::EXEC:    
         
         if(!($this->prev_sibling->action == HamlRule::EXEC && $this->prev_sibling->next->indent > $this->prev_sibling->indent))
         {
-          $rendered .= "$indent<?php ";
+          $rendered .= "$indent_in<?php ";
         }
     
         $rendered .= "$this->content";
@@ -185,12 +172,12 @@ class HamlRule
           $rendered .= " {";
         }
         
-        $rendered .= " ?>";
+        $rendered .= " ?>\n";
         
         break;
     }
     
-    if($this->content || (!$this->content && !$this->tag))
+    if(!$this->content && !$this->tag)
     {
       $rendered .= "\n";
     }
@@ -205,7 +192,7 @@ class HamlRule
       switch($this->action)
       {
         case HamlRule::EXEC:
-          $rendered .= "$indent<?php } ";
+          $rendered .= "$indent_in<?php } ";
           
           if(!($this->next_sibling->action == HamlRule::EXEC && $this->next_sibling->next->indent > $this->next_sibling->indent))
           {
@@ -215,7 +202,7 @@ class HamlRule
           break;
         
         case HamlRule::COMMENT:
-          $rendered .= "$indent-->\n";
+          $rendered .= "$indent_in-->\n";
           
           break;
       }
@@ -223,7 +210,8 @@ class HamlRule
     
     if($this->tag && !$this->selfclose)
     {
-      $rendered .= "$indent</$this->tag>\n";
+      if(!$this->content) $rendered .= "$indent_out";
+      $rendered .= "</$this->tag>\n";
     }
     
     return $rendered;
@@ -318,7 +306,8 @@ class HamlParser extends lime_parser
     
     if($action == HamlRule::SELFCLOSE)  $new_rule->selfclose = true;
     
-    if($this->_ws_eat_in) $new_rule->indent_render = 0;
+    if($this->_ws_in)  $new_rule->indent_in_render = false;
+    if($this->_ws_out)  $new_rule->indent_out_render = false;
    
     $this->_expect->check($new_rule);
     
@@ -355,6 +344,9 @@ class HamlParser extends lime_parser
     $this->_last_rule = $new_rule;
     $this->_cur_tag = '';
     $this->_cur_attr = array();
+    $this->_content = array();  
+    $this->_ws_in = false;
+    $this->_ws_out = false;
   }
   
   function process_tag($tag, $id)
@@ -369,40 +361,29 @@ class HamlParser extends lime_parser
 
   function process_attr($name, $value)
   {
-    $this->_cur_attr[$name] = $value;
+    $this->_cur_attr[$name] = $this->inline_code($value);
   }
   
-  function process_attr_code($name, $value)
+  function process_attr_html($value)
   {
-    $this->_cur_attr[$name] = '<?php echo ' . $value . " ?>";
+    $this->_cur_attr["*"] = trim($this->inline_code($value));
   }
   
   function process_content($value)
   {
-    $this->_content[] = array(HamlRule::CONTENT, $value);
-  }
-  
-  function process_inline($value)
-  {
-    $this->_content[] = array(HamlRule::INLINE, $value);
+    $this->_content = $value;
   }
 
   function process_eat()
   {
-    $this->_ws_eat_in = true;
+    $this->_ws_in = true;
   }
     
   function process_content_rule($indent, $content)
   {
-    $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::CONTENT, $content);
+    $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::CONTENT, $this->inline_code($content));
   }
   
-  function process_contentmix_rule($indent)
-  {
-    $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::CONTENTMIX, $this->_content);
-    $this->_content = array();
-  }
-
   function process_selfclosing_rule($indent)
   {
     $this->add_rule($indent, $this->_cur_tag, $this->_cur_attr, HamlRule::SELFCLOSE, "");
@@ -410,7 +391,7 @@ class HamlParser extends lime_parser
   
   function process_comment_rule($indent, $content)
   {
-    $this->add_rule($indent, '', array(), HamlRule::COMMENT, $content);
+    $this->add_rule($indent, '', array(), HamlRule::COMMENT, $this->inline_code($content));
   }
   
   function process_echo_rule($indent, $code, $escaping)
@@ -419,7 +400,7 @@ class HamlParser extends lime_parser
     {
       case 'PLAIN_ECHO':
       case 'ESCAPED_ECHO':
-        $code = "htmlentities($code, ENT_COMPAT);";
+        $code = "htmlspecialchars($code, ENT_COMPAT);";
         break;
     }
     
@@ -446,6 +427,11 @@ class HamlParser extends lime_parser
     {
       $this->_cur_attr['class'] = "$class";
     }
+  }
+  
+  function inline_code($c)
+  {
+    return preg_replace("/#{([^}]+)}/u", '<?php echo htmlspecialchars(\1, ENT_COMPAT); ?>', $c);
   }
   
   function print_ast()
