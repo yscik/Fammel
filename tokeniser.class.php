@@ -128,7 +128,27 @@ class Tokeniser
       case ' ': $token = $this->get_token(); break;
       
       case '%': $token = new Token('TAG', $this->get_tag_name()); $this->skip_whitespace(); $this->_tag = true; break;
-      case '#': $token = new Token('ID', $this->get_name()); $this->_tag = true;  $this->skip_whitespace(); break;
+      case '#': 
+          if(($c = $this->get_char()) == "{" || $c == "!")
+          {
+            if($c == "!")
+            {
+              if($this->get_char() == "{")
+              {
+                $token = new Token('LINE_CONTENT', $this->get_line("#!{"), false); break;
+              }
+              else $this->rewind();
+            }
+            else
+            {
+              $token = new Token('LINE_CONTENT', $this->get_line("#{"), false); break;
+            }
+          }
+          else
+          {
+            $this->rewind();
+            $token = new Token('ID', $this->get_name()); $this->_tag = true;  $this->skip_whitespace(); break;
+          }
       case '.': $token = new Token('CLASS', $this->get_name()); $this->_tag = true; $this->skip_whitespace();  break;
       
       case '-':

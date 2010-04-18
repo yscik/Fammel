@@ -77,9 +77,6 @@ class HamlRule
       {
         switch($this->content)
         {
-          default:
-          case '5':
-            $rendered .= '<!DOCTYPE html>'; break;
           case '1.0 transitional':
             $rendered .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'; break;
           case 'strict':
@@ -98,6 +95,9 @@ class HamlRule
             $rendered .= '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">'; break;
           case '4.01 frameset':
             $rendered .= '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">'; break;
+          case '5':
+          default:
+            $rendered .= '<!DOCTYPE html>'; break;
         }
         
         $rendered .= "\n";
@@ -131,7 +131,7 @@ class HamlRule
       
       if($this->selfclose) $rendered .= " /";
       $rendered .= ">";
-      if(!$this->content) $rendered .= "\n";
+      if(!$this->content && count($this->children)) $rendered .= "\n";
     }
     
     if($this->tag && $this->content && $this->indent_in_render)
@@ -210,7 +210,7 @@ class HamlRule
     
     if($this->tag && !$this->selfclose)
     {
-      if(!$this->content) $rendered .= "$indent_out";
+      if(!$this->content && count($this->children)) $rendered .= "$indent_out";
       $rendered .= "</$this->tag>\n";
     }
     
@@ -431,7 +431,9 @@ class HamlParser extends lime_parser
   
   function inline_code($c)
   {
-    return preg_replace("/#{([^}]+)}/u", '<?php echo htmlspecialchars(\1, ENT_COMPAT); ?>', $c);
+    $c = preg_replace("/#{([^}]+)}/u", '<?php echo htmlspecialchars(\1, ENT_COMPAT); ?>', $c);
+    $c = preg_replace("/#!{([^}]+)}/u", '<?php echo \1; ?>', $c);
+    return $c;
   }
   
   function print_ast()
