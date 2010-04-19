@@ -892,7 +892,7 @@ if ($_SERVER['argv']) {
 	}
 	
 	echo "<?php\n\n";
-?>
+
 
 /*
 
@@ -911,6 +911,8 @@ not the foot.
 
 */
 
-<?
+
 	echo $code;
 }
+
+?>

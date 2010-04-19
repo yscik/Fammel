@@ -33,7 +33,6 @@ tag_attributes = ATTR_START attribute_list ATTR_END
 .
 
 attribute_list = ATTR_NAME/n ATTR_VALUE/v { $this->process_attr($n, $v);}
-| ATTR_NAME/n INLINE_CODE/v { $this->process_attr_code($n, $v);} 
 | attribute_list ATTR_SEP attribute_list
 .
 
